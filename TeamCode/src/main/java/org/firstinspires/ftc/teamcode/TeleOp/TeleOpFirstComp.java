@@ -19,6 +19,7 @@ public class TeleOpFirstComp extends LinearOpMode {
         robot.init(hardwareMap);
 
         DriveTrain driveTrain = new DriveTrain(robot, timer);
+        Collector collector = new Collector(robot);
 
         waitForStart();
 
@@ -28,6 +29,7 @@ public class TeleOpFirstComp extends LinearOpMode {
 
         while(opModeIsActive()) {
             driveTrain.Update(gamepad1, gamepad2);
+            collector.Update(gamepad1, gamepad2);
 
         }
     }

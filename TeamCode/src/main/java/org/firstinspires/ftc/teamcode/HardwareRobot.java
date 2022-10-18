@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.TeleOp.DriveTrain;
+import org.firstinspires.ftc.teamcode.TeleOp.Collector;
 
 
 /**
@@ -33,9 +34,12 @@ public class HardwareRobot {
     public DcMotor frontLeft;
     public DcMotor backRight;
     public DcMotor backLeft;
+    public DcMotor collectorLeft;
+    public DcMotor collectorRight;
 
     // Referencing DriveTrain class
     DriveTrain DriveTrain;
+    Collector Collector;
 
 
     // Local opMode Members
@@ -60,6 +64,8 @@ public class HardwareRobot {
         frontLeft = hwMap.get(DcMotor.class, "frontLeft");
         backRight = hwMap.get(DcMotor.class, "backRight");
         backLeft = hwMap.get(DcMotor.class, "backLeft");
+        collectorLeft = hwMap.get(DcMotor.class, "collectorLeft");
+        collectorRight = hwMap.get(DcMotor.class, "collectorRight");
 
         // Reverse Directions
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -72,8 +78,8 @@ public class HardwareRobot {
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-
+        collectorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        collectorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
 }
