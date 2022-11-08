@@ -1,14 +1,20 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
+import com.sun.tools.javac.util.List;
+
+import org.firstinspires.ftc.teamcode.Drive.MyMecanumDrive;
 import org.firstinspires.ftc.teamcode.TeleOp.DriveTrain;
 import org.firstinspires.ftc.teamcode.TeleOp.Collector;
+import org.firstinspires.ftc.teamcode.Util.LynxModuleUtil;
+
+import java.util.Arrays;
 
 
 /**
@@ -31,12 +37,16 @@ import org.firstinspires.ftc.teamcode.TeleOp.Collector;
 public class HardwareRobot {
 
     // Public opMode Members
+    public MyMecanumDrive mecanumDrive;
     public DcMotorEx frontRight;
     public DcMotorEx frontLeft;
     public DcMotorEx backRight;
     public DcMotorEx backLeft;
     public DcMotor collectorLeft;
     public DcMotor collectorRight;
+    public List<DcMotorEx> motors;
+    public BNO055IMU imu;
+    public VoltageSensor batteryVoltageSensor;
 
     // Referencing DriveTrain class
     DriveTrain DriveTrain;
@@ -44,7 +54,7 @@ public class HardwareRobot {
 
 
     // Local opMode Members
-    HardwareMap hwMap;
+    public HardwareMap hwMap;
 
     // Constructor
     public HardwareRobot() {
@@ -81,6 +91,22 @@ public class HardwareRobot {
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         collectorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         collectorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        // All the Autonomous/HardwareMap stuff
+        LynxModuleUtil.ensureMinimumFirmwareVersion(hwMap);
+        batteryVoltageSensor = hwMap.voltageSensor.iterator().next();
+        for (LynxModule module : hwMap.getAll(LynxModule.class)) {
+            module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
+        }
+
+        imu = hwMap.get(BNO055IMU.class, "imu");
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
+        imu.initialize(parameters);
+        motors = (List<DcMotorEx>) Arrays.asList(frontLeft, backLeft, backRight, frontRight);
+
+        // Make sure always the last line (all stuff needed for drivetrain)
+        mecanumDrive = new MyMecanumDrive(this);
 
     }
 }
