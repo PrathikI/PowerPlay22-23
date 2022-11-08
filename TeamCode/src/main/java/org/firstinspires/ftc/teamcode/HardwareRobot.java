@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -30,10 +31,10 @@ import org.firstinspires.ftc.teamcode.TeleOp.Collector;
 public class HardwareRobot {
 
     // Public opMode Members
-    public DcMotor frontRight;
-    public DcMotor frontLeft;
-    public DcMotor backRight;
-    public DcMotor backLeft;
+    public DcMotorEx frontRight;
+    public DcMotorEx frontLeft;
+    public DcMotorEx backRight;
+    public DcMotorEx backLeft;
     public DcMotor collectorLeft;
     public DcMotor collectorRight;
 
@@ -60,10 +61,10 @@ public class HardwareRobot {
 
 
         // Define and Initialize Motors
-        frontRight = hwMap.get(DcMotor.class, "frontRight");
-        frontLeft = hwMap.get(DcMotor.class, "frontLeft");
-        backRight = hwMap.get(DcMotor.class, "backRight");
-        backLeft = hwMap.get(DcMotor.class, "backLeft");
+        frontRight = hwMap.get(DcMotorEx.class, "frontRight");
+        frontLeft = hwMap.get(DcMotorEx.class, "frontLeft");
+        backRight = hwMap.get(DcMotorEx.class, "backRight");
+        backLeft = hwMap.get(DcMotorEx.class, "backLeft");
         collectorLeft = hwMap.get(DcMotor.class, "collectorLeft");
         collectorRight = hwMap.get(DcMotor.class, "collectorRight");
 

@@ -12,15 +12,6 @@ public class DriveTrain {
     public ElapsedTime timer;
     double DriveSen = 0.6;
 
-    public  enum DriveState {
-        START,
-        IDLE,
-        FORWARDS,
-        STOP,
-        BACKWARDS
-    }
-
-    public static DriveState state = DriveState.IDLE;
 
     public DriveTrain(HardwareRobot r, ElapsedTime timer) {
         robot = r;
