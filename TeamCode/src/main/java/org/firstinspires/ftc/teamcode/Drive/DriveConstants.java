@@ -55,9 +55,11 @@ public class DriveConstants {
      * motor encoders or have elected not to use them for velocity control, these values should be
      * empirically tuned.
      */
-    public static double kV = 1.0 / rpmToVelocity(MAX_RPM);
-    public static double kA = 0.002;
-    public static double kStatic = 0.01;
+
+    // Hard Coded Values from the FTC Dashboard
+    public static double kV = 0.016195745489133; // Get exact value when home
+    public static double kA = 0.0021;
+    public static double kStatic = 0.003;
 
     /*
      * These values are used to generate the trajectories for you robot. To ensure proper operation,
@@ -99,8 +101,8 @@ public class DriveConstants {
      * https://github.com/acmerobotics/road-runner-quickstart/issues/91
 
      */
-    public static double MAX_VEL = 90;
-    public static double MAX_ACCEL = 90;
+    public static double MAX_VEL = 50;
+    public static double MAX_ACCEL = 60;
     public static double MAX_ANG_VEL = Math.toRadians(360);
     public static double MAX_ANG_ACCEL = Math.toRadians(360);
 

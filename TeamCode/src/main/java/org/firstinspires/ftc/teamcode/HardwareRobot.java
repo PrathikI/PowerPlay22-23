@@ -66,18 +66,17 @@ public class HardwareRobot {
         // collectorRight = hwMap.get(DcMotor.class, "collectorRight");
 
         // Reverse Directions
-        frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        // frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        // frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        // backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        // Brake Motors Instantaneously
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        // Run Using Encoders
-        // frontRight.setMode(DcMotor.RunMode.RUN);
-        // frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        // backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        // backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        // collectorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        // collectorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
 }
