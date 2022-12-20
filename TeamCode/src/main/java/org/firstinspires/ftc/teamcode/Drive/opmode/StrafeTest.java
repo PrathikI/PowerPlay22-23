@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.HardwareRobot;
 
 /*
  * This is a simple routine to test translational drive capabilities.
@@ -23,16 +24,22 @@ public class StrafeTest extends LinearOpMode {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        HardwareRobot robot = new HardwareRobot();
 
-        Trajectory trajectory = drive.trajectoryBuilder(new Pose2d())
+        robot.init(hardwareMap);
+
+
+        Trajectory trajectoryRight = drive.trajectoryBuilder(new Pose2d())
                 .strafeRight(DISTANCE)
+                .build();
+
+        Trajectory trajectoryLeft = drive.trajectoryBuilder(trajectoryRight.end())
+                .strafeLeft(DISTANCE)
                 .build();
 
         waitForStart();
 
         if (isStopRequested()) return;
-
-        drive.followTrajectory(trajectory);
 
         Pose2d poseEstimate = drive.getPoseEstimate();
         telemetry.addData("finalX", poseEstimate.getX());
@@ -40,6 +47,9 @@ public class StrafeTest extends LinearOpMode {
         telemetry.addData("finalHeading", poseEstimate.getHeading());
         telemetry.update();
 
-        while (!isStopRequested() && opModeIsActive()) ;
+        while (!isStopRequested() && opModeIsActive()) {
+            drive.followTrajectory(trajectoryRight);
+            drive.followTrajectory(trajectoryLeft);
+        }
     }
 }

@@ -52,10 +52,15 @@ import static org.firstinspires.ftc.teamcode.Drive.DriveConstants.kV;
  */
 @Config
 public class SampleMecanumDrive extends MecanumDrive {
-        public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(0, 0, 0);
-    public static PIDCoefficients HEADING_PID = new PIDCoefficients(0, 0, 0);
 
-    public static double LATERAL_MULTIPLIER = 1.4634;
+    // No value (except 0) corrects for distance ---> does crazy things
+    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(7, 0, 0); // kP 5-9
+
+    // Mostly tuned; double check when Brandon comes (12/19) ---> -12 right now
+    // Why is this NEGATIVE?
+    public static PIDCoefficients HEADING_PID = new PIDCoefficients(10, 0, 0); // 8-12
+
+    public static double LATERAL_MULTIPLIER = -1.4634;
 
     public static double VX_WEIGHT = 1;
     public static double VY_WEIGHT = 1;
