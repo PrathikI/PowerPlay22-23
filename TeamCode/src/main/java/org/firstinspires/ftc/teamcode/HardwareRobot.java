@@ -1,12 +1,9 @@
+// HardwareRobot Class is for all motors, servos, cameras, etc that IS NOT part of DriveTrain
+// DriveTrain motors are located in MecanumDrive
+
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
-import org.firstinspires.ftc.teamcode.Drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.TeleOp.DriveTrain;
 
 
 /**
@@ -28,17 +25,11 @@ import org.firstinspires.ftc.teamcode.TeleOp.DriveTrain;
 
 public class HardwareRobot {
 
-    // Public opMode Members
-    public SampleMecanumDrive mecanumDrive;
-    public DcMotorEx frontRight;
-    public DcMotorEx frontLeft;
-    public DcMotorEx backRight;
-    public DcMotorEx backLeft;
-    // public DcMotor collectorLeft;
-    // public DcMotor collectorRight;
+    public MecanumDrive mecanumDrive;
 
-    // Referencing DriveTrain class
-    DriveTrain DriveTrain;
+
+    // Public opMode Members
+    // Instantiate motors, servos, cameras, etc here
 
     // Local opMode Members
     public HardwareMap hwMap;
@@ -48,34 +39,11 @@ public class HardwareRobot {
 
     }
 
-
-
     // Initialize Standard Hardware Interfaces
     public void init(HardwareMap ahwMap) {
 
         // Save Reference to HardwareMap
         hwMap = ahwMap;
-
-
-        // Define and Initialize Motors
-        frontRight = hwMap.get(DcMotorEx.class, "frontRight");
-        frontLeft = hwMap.get(DcMotorEx.class, "frontLeft");
-        backRight = hwMap.get(DcMotorEx.class, "backRight");
-        backLeft = hwMap.get(DcMotorEx.class, "backLeft");
-        // collectorLeft = hwMap.get(DcMotor.class, "collectorLeft");
-        // collectorRight = hwMap.get(DcMotor.class, "collectorRight");
-
-        // Reverse Directions
-        // frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        // frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        // backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        // Brake Motors Instantaneously
-        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
     }

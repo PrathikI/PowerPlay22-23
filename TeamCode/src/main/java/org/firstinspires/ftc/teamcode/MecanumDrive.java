@@ -1,11 +1,13 @@
-package org.firstinspires.ftc.teamcode.Drive;
+// MecanumDrive Class is for all DriveTrain motors and math/values
+// External motors, servos, cameras, etc are located in HardwareRobot
+
+package org.firstinspires.ftc.teamcode;
 
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.drive.DriveSignal;
-import com.acmerobotics.roadrunner.drive.MecanumDrive;
 import com.acmerobotics.roadrunner.followers.HolonomicPIDVAFollower;
 import com.acmerobotics.roadrunner.followers.TrajectoryFollower;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -20,12 +22,13 @@ import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityCons
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
+import org.firstinspires.ftc.teamcode.Drive.StandardTrackingWheelLocalizer;
 import org.firstinspires.ftc.teamcode.TrajectorySequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.TrajectorySequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.TrajectorySequence.TrajectorySequenceRunner;
@@ -47,17 +50,15 @@ import static org.firstinspires.ftc.teamcode.Drive.DriveConstants.kA;
 import static org.firstinspires.ftc.teamcode.Drive.DriveConstants.kStatic;
 import static org.firstinspires.ftc.teamcode.Drive.DriveConstants.kV;
 
-/*
- * Simple mecanum drive hardware implementation for REV hardware.
- */
-@Config
-public class SampleMecanumDrive extends MecanumDrive {
 
-    // No value (except 0) corrects for distance ---> does crazy things
+@Config
+public class MecanumDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive {
+
+    // No value (except 0) corrects for distance ---> does crazy things   **FIXED**
     public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(7, 0, 0); // kP 5-9
 
-    // Mostly tuned; double check when Brandon comes (12/19) ---> -12 right now
-    // Why is this NEGATIVE?
+    // Mostly tuned; double check when Brandon comes (12/19) ---> -12 right now   **FIXED**
+    // Why is this NEGATIVE?   **FIXED**
     public static PIDCoefficients HEADING_PID = new PIDCoefficients(10, 0, 0); // 8-12
 
     public static double LATERAL_MULTIPLIER = -1.4634;
@@ -65,6 +66,8 @@ public class SampleMecanumDrive extends MecanumDrive {
     public static double VX_WEIGHT = 1;
     public static double VY_WEIGHT = 1;
     public static double OMEGA_WEIGHT = 1;
+
+    double DriveSen = 0.6;
 
     private TrajectorySequenceRunner trajectorySequenceRunner;
 
@@ -78,7 +81,7 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     private VoltageSensor batteryVoltageSensor;
 
-    public SampleMecanumDrive(HardwareMap hardwareMap) {
+    public MecanumDrive(HardwareMap hardwareMap) {
         super(kV, kA, kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
 
         follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
@@ -151,6 +154,35 @@ public class SampleMecanumDrive extends MecanumDrive {
 
 
         trajectorySequenceRunner = new TrajectorySequenceRunner(follower, HEADING_PID);
+    }
+
+    // Update Function for the DriveTrain Math (called in TeleOpFirstComp)
+    public void Update(Gamepad gamepad1, Gamepad gamepad2) {
+
+        double y = -gamepad1.left_stick_x;
+        double x = -gamepad1.left_stick_y;
+        double rx = 0.7 * gamepad1.right_stick_x;
+
+        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+
+        if (denominator == 0) {
+            frontLeft.setPower(0);
+            frontRight.setPower(0);
+            backLeft.setPower(0);
+            backRight.setPower(0);
+        }
+
+        else {
+            double frontLeftPower = (y + x + rx) / denominator;
+            double backLeftPower = (-y + x + rx) / denominator;
+            double frontRightPower = (-y + x - rx) / denominator;
+            double backRightPower = (y + x - rx) / denominator;
+
+            frontLeft.setPower(DriveSen * frontLeftPower);
+            frontRight.setPower(DriveSen * frontRightPower);
+            backLeft.setPower(DriveSen * backLeftPower);
+            backRight.setPower(DriveSen * backRightPower);
+        }
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose) {
