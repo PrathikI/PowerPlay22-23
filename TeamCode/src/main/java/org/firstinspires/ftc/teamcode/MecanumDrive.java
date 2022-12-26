@@ -145,9 +145,9 @@ public class MecanumDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive
 
         // TODO: reverse any motors using DcMotor.setDirection()
         // frontLeft.setDirection(DcMotorEx.Direction.REVERSE);
-        backLeft.setDirection(DcMotorEx.Direction.REVERSE);
+        // backLeft.setDirection(DcMotorEx.Direction.REVERSE);
         backRight.setDirection(DcMotorEx.Direction.REVERSE);
-        frontRight.setDirection(DcMotorEx.Direction.REVERSE);
+        // frontRight.setDirection(DcMotorEx.Direction.REVERSE);
 
         // TODO: if desired, use setLocalizer() to change the localization method
         setLocalizer(new StandardTrackingWheelLocalizer(hardwareMap));
@@ -159,8 +159,8 @@ public class MecanumDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive
     // Update Function for the DriveTrain Math (called in TeleOpFirstComp)
     public void Update(Gamepad gamepad1, Gamepad gamepad2) {
 
-        double y = -gamepad1.left_stick_x;
-        double x = -gamepad1.left_stick_y;
+        double y = -gamepad1.left_stick_y;
+        double x = gamepad1.left_stick_x;
         double rx = 0.7 * gamepad1.right_stick_x;
 
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
@@ -174,8 +174,8 @@ public class MecanumDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive
 
         else {
             double frontLeftPower = (y + x + rx) / denominator;
-            double backLeftPower = (-y + x + rx) / denominator;
-            double frontRightPower = (-y + x - rx) / denominator;
+            double backLeftPower = (y - x + rx) / denominator;
+            double frontRightPower = (y - x - rx) / denominator;
             double backRightPower = (y + x - rx) / denominator;
 
             frontLeft.setPower(DriveSen * frontLeftPower);

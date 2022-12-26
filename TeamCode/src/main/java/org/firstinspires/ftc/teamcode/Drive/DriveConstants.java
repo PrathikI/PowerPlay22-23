@@ -47,7 +47,7 @@ public class DriveConstants {
      */
     public static double WHEEL_RADIUS = 1.8898; // in
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 8.76; // in
+    public static double TRACK_WIDTH = 9.39; // in
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using
@@ -57,9 +57,9 @@ public class DriveConstants {
      */
 
     // Hard Coded Values from the FTC Dashboard
-    public static double kV = 0.018; //0.016195745489133
+    public static double kV = 0.019; //0.016195745489133
     public static double kA = 0.0040; //0.0021
-    public static double kStatic = -0.08; //0.003
+    public static double kStatic = -0.05; //0.003
 
     /*
      * These values are used to generate the trajectories for you robot. To ensure proper operation,
