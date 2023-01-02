@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.HardwareRobot;
 
+// Driver A - controls DriveTrain and Intake Servo
+// Driver B - controls Turn Table Motor and Servo
 @TeleOp
 public class TeleOpFirstComp extends LinearOpMode {
 

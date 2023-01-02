@@ -3,7 +3,10 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 
 /**
@@ -29,7 +32,10 @@ public class HardwareRobot {
 
 
     // Public opMode Members
-    // Instantiate motors, servos, cameras, etc here
+    public DcMotorEx turnTable;
+    public Servo frontServo;
+    public Servo backServo;
+    public CRServo intakeServo;
 
     // Local opMode Members
     public HardwareMap hwMap;
